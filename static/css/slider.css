@@ -1,0 +1,36 @@
+.slider {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  
+  }
+  
+  .slider-item {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 300px;
+    margin-right: 10px;
+  }
+  
+  .slider-item img {
+    width: 100%;
+    
+  }
+  
+  .slider-item h3 {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  
+  .slider-item p {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+ 
+  .ArtistPic {
+    max-width: 200px;
+    max-height: 200px;
+}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mb-5 ">
+
+    <div class="main-slider owl-single owl-carousel ">
+        {% for post in posts %}
+      <div class="huge-article d-md-flex ">
+        <div class="img-wrap bg-dark">
+          <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt="{{post.title}}" class="img-fluid"></a>
+        </div>
+        <div class="text-wrap ">
+          <div class="meta`">
+            <span class="d-inline-block"> Publié {{ post.publish.date }}</span>
+            <span class="mx-2 bg-dark">&bullet;</span>
+            <span>par {{ post.author }}</span>
+          </div>
+          <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.body|safe|striptags|truncatechars:500 }}</p>
+          <div class="author d-flex align-items-center ">
+            
+            
+          </div>
+        </div>
+      </div>
+      <!-- item -->
+      {% endfor %}
+    
+
+    </div>
+  </div>
+
+
+
+
+<div class="section-latest">
+    <div class="container">
+      <div class="row gutter-v1 align-items-stretch mb-5">
+        <div class="col-12">
+            {% if tag %}
+          <h2 class="section-title">{{ tag.name }}</h2>
+          {% endif %}
+        </div>
+        
+        <div class="col-md-9 pr-md-5">
+          <div class="row">
+            {% for post in posts %}
+            <div class="col-12">
+              <div class="post-entry horizontal d-md-flex">
+                <div class="media">
+                  <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt="{{post.title}}" class="img-fluid"></a>
+                </div>
+                <div class="text">
+                  <div class="meta">
+                    <span> Publié {{ post.publish.date }}</span>
+                    <span>&bullet;</span>
+                    <span>par{{ post.author }}</span>
+                  </div>
+                  <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                  <p>{{ post.body|safe|striptags|truncatechars:100 }}</p>
+                  
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% include "pagination.html" with page=posts %}
+           
+            
+ 
+
+          </div>
+        </div>
+
+        {% include 'massage.html' %}
+      </div>
+
+      <div class="row">
+   
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

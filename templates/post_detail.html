@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block content %}
+
+<div class="featured-post single-article">
+    <div class="container">
+      <div class="post-slide single-page " >
+        <img src="{{ post.image.url }}" class="img-fluid mx-auto d-block" alt="{{post.title}}">
+        <div class="text-wrap pb-5">
+          <div class="share">
+            <ul class="list-unstyled">
+              <li><a href="#"><span class="icon-facebook"></span></a></li>
+              <li><a href="#"><span class="icon-twitter"></span></a></li>
+              <li><a href="#"><span class="icon-pinterest"></span></a></li>
+            </ul>
+          </div>
+          <h2 class="text-black">{{post.title}}</h2>
+          <div class="meta">
+            <span> Publié {{ post.publish.date }}</span>
+            <span>&bullet;</span>
+            <span>par {{ post.author }}</span>
+          </div>
+        </div>
+      </div> <!-- .post-slide -->
+
+    </div>
+  </div>
+
+
+<div class="container article">
+    <div class="row justify-content-center align-items-stretch">
+      
+      <article class="col-lg-8 order-lg-2 px-lg-5 col-md-8 order-md-2 px-md-5 col-sm-8 order-sm-2 px-sm-5 img-fluid rounded">
+       
+        <p class=""> {{post.body | safe}} </p>
+       
+
+       
+
+        <div class="pt-5 categories_tags ">
+              <p>Étiquettes :
+                {% for tag in post.tags.all %}
+                <a href="{% url 'blog:post_tag' tag.slug %}">{{tag.name}}</a>
+                {% endfor %}
+            </p>
+            </div>
+
+            <div class="post-single-navigation d-flex align-items-stretch">
+              {% if Post.get_next_by_created_at %}
+              <a href="{% url 'blog:post_detail' Post.get_next_by_created_at.slug %}" class="mr-auto w-50 pr-4">
+                <span class="d-block">Previous Post</span>
+                A Mounteering Guide For Beginners
+              </a>
+              {% endif %}
+        {% if post.get_previous_by_created_at %}
+              <a href="{% url 'blog:post_detail' Post.get_previous_by_created_at.slug %}" class="ml-auto w-50 text-right pl-4">
+                <span class="d-block">Next Post</span>
+                12 Creative Designers Share Ideas About Web Design
+              </a>
+              {% endif %}
+            </div>
+
+            <h3>Articles similaires</h3>
+  <div class="slider">
+    {% for post in similar_posts %}
+    <div class="slider-item ">
+                
+  <a href="{{post.get_absolute_url}}"><img src="{{ post.image.url }}" class="ArtistPic" alt="{{post.title}}"></a>
+   <p>{{post.title}}</p>
+
+    </div>
+    {% endfor %}
+
+  </div>
+  
+
+
+
+
+
+            
+          <div class="pt-5">
+            {% with comments.count as total_comments %}
+            <h3 class="mb-5">{{ total_comments }} Commentaire{{ total_comments|pluralize }}</h3>{% endwith %}
+
+            <hr />
+            {% if not post.comments.all %}
+            Pas encore de commentaire
+            
+            {% else %}
+            {% for comment in post.get_comments %}
+            {% include 'comment.html' with comment=comment %}
+            {% endfor %}
+            {% endif %}
+            <hr />
+            <h3>Ajouter un commentaire</h3>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-primary">Commentaire</button>
+            </form>
+            
+        
+            
+ 
+          
+
+      </article>
+
+      <div class="col-md-12 col-lg-1 order-lg-1">
+        <div class="share sticky-top">
+          <h3>Share</h3>
+          <ul class="list-unstyled share-article">
+            <li><a href="#"><span class="icon-facebook"></span></a></li>
+            <li><a href="#"><span class="icon-twitter"></span></a></li>
+            <li><a href="#"><span class="icon-pinterest"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
+ 
+
+        <div class="share floating-block sticky-top">
+          
+            <h2 class="mb-3 text-black">DrBous</h2>
+            <p>Dr Boushab est un blog santé animé par une équipe de professionnels du secteur médical et paramédical. Nous animons ce blog sur notre temps libre pour partager avec vous quelques conseils, trucs et astuces qui peuvent vous changer le quotidien !</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock content %}
